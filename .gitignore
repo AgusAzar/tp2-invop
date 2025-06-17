@@ -3,6 +3,4 @@
 /modeloAdicional.lp
 /tsp.lp
 /nuevoModelo.lp
-/outputModeloAdicional.txt
-/outputNuevoModelo.txt
-/outputTsp.txt
+/resultados

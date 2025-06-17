@@ -155,20 +155,16 @@ def agregar_restricciones(prob, instancia):
                                         names=[f'r{i + 1}{j + 1} sale desde cliente visitado'])
 
     # conservacion
-
     for i in range(cant_clientes):
         variables = [x for j in range(cant_clientes) if j != i for x in [f'x{i + 1}{j + 1}', f'x{j + 1}{i + 1}']]
         prob.linear_constraints.add(lin_expr=[[variables, [1.0, -1.0] * len(variables)]], senses=["E"], rhs=[0],
                                     names=[f'Conservacion {i + 1}'])
 
     # de tour
-    # prob.linear_constraints.add(lin_expr=[[["u1"],[1.0]]], senses=["E"], rhs=[0], names=["detour u1"])
-
     for i in range(cant_clientes):
         prob.linear_constraints.add(lin_expr=[[[f'u{i + 1}', f'd{i + 1}'], [1.0, 1.0]]], senses=["G"], rhs=[1],
                                     names=[f"cota u{i + 1}"])
 
-    # ver como escribir ui <= cant_clientes(1-di)
     for i in range(cant_clientes):
         prob.linear_constraints.add(lin_expr=[[[f'u{i + 1}', f'd{i + 1}'], [1.0, cant_clientes]]], senses=["L"],
                                     rhs=[cant_clientes], names=[f"cota u{i + 1}"])
@@ -182,13 +178,6 @@ def agregar_restricciones(prob, instancia):
                         [1.0, -1.0, cant_clientes - 1, -cant_clientes, -cant_clientes]]],
                     senses=["L"], rhs=[
                         cant_clientes - 2], names=[f'detour x{i + 1}{j + 1}'])
-
-    # for i in range(2,instancia.cant_clientes):
-    #     variables_x = [f'x{i+1}{j+1}' for j in range(1,i)]
-    #     valores_x = [-1.0] * len(variables_x)
-    #     variables = [f'u{i+1}'] + variables_x
-    #     valores = [1.0] + valores_x
-    #     prob.linear_constraints.add(lin_expr=[[variables, valores]], senses=["L"], rhs=[0] names=['???'])
 
     # visitar a cada cliente
     for j in range(cant_clientes):
