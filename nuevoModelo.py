@@ -160,7 +160,7 @@ def agregar_restricciones(prob, instancia):
     for i in range(instancia.cant_clientes):
         for j in range(instancia.cant_clientes):
             if i != j:
-                prob.linear_constraints.add(lin_expr=[[[f'u{i+1}',f'u{j+1}', f'x{i+1}{j+1}', f'r{i+1}{j+1}',f'd{i+1}',f'd{j+1}'],[1.0,-1.0,instancia.cant_clientes-1, instancia.cant_clientes-1, -instancia.cant_clientes, -instancia.cant_clientes]]], senses=["L"], rhs=[instancia.cant_clientes-2], names=[f'detour x{i+1}{j+1}'])
+               prob.linear_constraints.add(lin_expr=[[[f'u{i+1}',f'u{j+1}', f'x{i+1}{j+1}', f'd{i+1}',f'd{j+1}'],[1.0,-1.0,instancia.cant_clientes-1, -instancia.cant_clientes, -instancia.cant_clientes]]], senses=["L"], rhs=[instancia.cant_clientes-2], names=[f'detour x{i+1}{j+1}'])
 
     # for i in range(2,instancia.cant_clientes):
     #     variables_x = [f'x{i+1}{j+1}' for j in range(1,i)]
