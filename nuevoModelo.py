@@ -114,7 +114,7 @@ def agregar_restricciones(prob, instancia):
     prob.linear_constraints.add(lin_expr=[[[f'd{i+1}' for i in range(instancia.cant_clientes)], [1.0] * instancia.cant_clientes]], senses=["E"], rhs=[1], names=["Solo un deposito"])
 
 
-    # no visitar un cliente mas de una vez
+    # no visitar un cliente más de una vez
     
     for j in range(instancia.cant_clientes):
         variables = [ f'x{i+1}{j+1}' for i in range(instancia.cant_clientes) ]
@@ -220,7 +220,9 @@ def mostrar_solucion(prob,instancia):
 
     # Mostrar las variables con valor positivo (mayor que una tolerancia)
     vars = zip(prob.variables.get_names(), x)
-    print(list(vars))
+    for var, val in vars:
+        if not val == 0:
+            print(var,": ", val)
 
 def main():
     
