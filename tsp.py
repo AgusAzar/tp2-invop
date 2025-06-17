@@ -55,8 +55,10 @@ class InstanciaRecorridoMixto:
 
 def cargar_instancia():
     # El 1er parametro es el nombre del archivo de entrada
-    # nombre_archivo = sys.argv[1].strip()
-    nombre_archivo = "instancia.txt"
+    if len(sys.argv) < 2:
+        nombre_archivo = "instancia.txt"
+    else:
+        nombre_archivo = sys.argv[1].strip()
     # Crea la instancia vacia
     instancia = InstanciaRecorridoMixto()
     # Llena la instancia con los datos del archivo de entrada 
@@ -144,7 +146,7 @@ def armar_lp(prob, instancia):
     prob.objective.set_sense(prob.objective.sense.minimize)
 
     # Escribir el lp a archivo
-    prob.write('recorridoMixto.lp')
+    prob.write('tsp.lp')
 
 def resolver_lp(prob):
     
@@ -154,24 +156,27 @@ def resolver_lp(prob):
     # Resolver el lp
     prob.solve()
 
-def mostrar_solucion(prob,instancia):
-    
+
+def mostrar_solucion(prob, instancia):
     # Obtener informacion de la solucion a traves de 'solution'
-    
+
     # Tomar el estado de la resolucion
-    status = prob.solution.get_status_string(status_code = prob.solution.get_status())
-    
+    status = prob.solution.get_status_string(status_code=prob.solution.get_status())
+
     # Tomar el valor del funcional
     valor_obj = prob.solution.get_objective_value()
-    
-    print('Funcion objetivo: ',valor_obj,'(' + str(status) + ')')
-    
+
+    print('Funcion objetivo: ', valor_obj, '(' + str(status) + ')')
+
     # Tomar los valores de las variables
-    x  = prob.solution.get_values()
+    x = prob.solution.get_values()
 
     # Mostrar las variables con valor positivo (mayor que una tolerancia)
     vars = zip(prob.variables.get_names(), x)
-    print(list(vars))
+    for var, val in vars:
+        if not val == 0:
+            print(var, ": ", val)
+
 
 def main():
     

@@ -96,6 +96,10 @@ def agregar_variables(prob, instancia):
     # Eleccion de depostio
     prob.variables.add(obj=[0]*instancia.cant_clientes, types= ([prob.variables.type.binary] * instancia.cant_clientes), names=[f'd{i+1}' for i in range(instancia.cant_clientes)])
 
+    # Hacer 4 entregar por repartidor
+    r_aux = [f'r{i+1}' for i in range(instancia.cant_clientes) ]
+    prob.variables.add(obj = [0]*len(r_aux), types=[prob.variables.type.binary]*len(r_aux), names=r_aux)
+
 
 
 def agregar_restricciones(prob, instancia):
@@ -111,27 +115,28 @@ def agregar_restricciones(prob, instancia):
     # agreguemos una unica restriccion, tenemos que hacerlo como una lista de un unico
     # elemento.
 
-    deposito = 0
+    cant_clientes = instancia.cant_clientes
+
     #solo un deposito
-    prob.linear_constraints.add(lin_expr=[[[f'd{i+1}' for i in range(instancia.cant_clientes)], [1.0] * instancia.cant_clientes]], senses=["E"], rhs=[1], names=["Solo un deposito"])
+    prob.linear_constraints.add(lin_expr=[[[f'd{i+1}' for i in range(cant_clientes)], [1.0] * cant_clientes]], senses=["E"], rhs=[1], names=["Solo un deposito"])
 
 
     # no visitar un cliente más de una vez
     
-    for j in range(instancia.cant_clientes):
-        variables = [ f'x{i+1}{j+1}' for i in range(instancia.cant_clientes) ]
+    for j in range(cant_clientes):
+        variables = [ f'x{i+1}{j+1}' for i in range(cant_clientes)]
         prob.linear_constraints.add(lin_expr=[[variables, [1.0] * len(variables)]], senses=["L"], rhs=[1], names=[f'Visitar una sola vez cliente {j+1}'])
 
     # no enviar a un repartidor a una distancia mayor a la maxima
-    for i in range(instancia.cant_clientes):
-        for j in range(instancia.cant_clientes):
+    for i in range(cant_clientes):
+        for j in range(cant_clientes):
             prob.linear_constraints.add(lin_expr=[[[f'r{i+1}{j+1}'],[instancia.distancias[i][j]]]], senses=["L"], rhs=[instancia.d_max], names=[f'distancia maxima {i+1} a {j+1}'])
     
     # los repartidores deben de salir de lugares donde el camion frenó
-    for i in range(instancia.cant_clientes):
+    for i in range(cant_clientes):
         # if i == deposito: continue
-        for j in range(instancia.cant_clientes):
-            variables = [ f'x{k+1}{i+1}' for k in range(instancia.cant_clientes) ]
+        for j in range(cant_clientes):
+            variables = [ f'x{k+1}{i+1}' for k in range(cant_clientes)]
             valores = [1.0]  * len(variables)
             variables.append(f'd{i+1}')
             valores.append(1.0)
@@ -141,26 +146,28 @@ def agregar_restricciones(prob, instancia):
 
     #conservacion
 
-    for i in range(instancia.cant_clientes):
-        variables = [ x for j in range(instancia.cant_clientes) if j != i for x in [f'x{i+1}{j+1}', f'x{j+1}{i+1}']]
+    for i in range(cant_clientes):
+        variables = [x for j in range(cant_clientes) if j != i for x in [f'x{i + 1}{j + 1}', f'x{j + 1}{i + 1}']]
         prob.linear_constraints.add(lin_expr=[[variables, [1.0, -1.0] * len(variables)]], senses=["E"], rhs=[0], names=[f'Conservacion {i+1}'])
     
     #de tour
     # prob.linear_constraints.add(lin_expr=[[["u1"],[1.0]]], senses=["E"], rhs=[0], names=["detour u1"])
 
    
-    for i in range(instancia.cant_clientes):
+    for i in range(cant_clientes):
         prob.linear_constraints.add(lin_expr=[[[f'u{i+1}', f'd{i+1}'], [1.0,1.0]]], senses=["G"], rhs=[1], names=[f"cota u{i+1}"])
 
     # ver como escribir ui <= cant_clientes(1-di)
-    for i in range(instancia.cant_clientes):
-        prob.linear_constraints.add(lin_expr=[[[f'u{i+1}', f'd{i+1}'], [1.0,instancia.cant_clientes]]], senses=["L"], rhs=[instancia.cant_clientes], names=[f"cota u{i+1}"])
+    for i in range(cant_clientes):
+        prob.linear_constraints.add(lin_expr=[[[f'u{i+1}', f'd{i+1}'], [1.0, cant_clientes]]], senses=["L"], rhs=[cant_clientes], names=[f"cota u{i + 1}"])
 
 
-    for i in range(instancia.cant_clientes):
-        for j in range(instancia.cant_clientes):
+    for i in range(cant_clientes):
+        for j in range(cant_clientes):
             if i != j:
-                prob.linear_constraints.add(lin_expr=[[[f'u{i+1}',f'u{j+1}', f'x{i+1}{j+1}', f'r{i+1}{j+1}',f'd{i+1}',f'd{j+1}'],[1.0,-1.0,instancia.cant_clientes-1, instancia.cant_clientes-1, -instancia.cant_clientes, -instancia.cant_clientes]]], senses=["L"], rhs=[instancia.cant_clientes-2], names=[f'detour x{i+1}{j+1}'])
+                prob.linear_constraints.add(lin_expr=[[[f'u{i+1}',f'u{j+1}', f'x{i+1}{j+1}', f'r{i+1}{j+1}',f'd{i+1}',f'd{j+1}'], [1.0, -1.0,
+                                                                                                                                   cant_clientes - 1, cant_clientes - 1, -cant_clientes, -cant_clientes]]], senses=["L"], rhs=[
+                    cant_clientes - 2], names=[f'detour x{i + 1}{j + 1}'])
 
     # for i in range(2,instancia.cant_clientes):
     #     variables_x = [f'x{i+1}{j+1}' for j in range(1,i)]
@@ -170,16 +177,37 @@ def agregar_restricciones(prob, instancia):
     #     prob.linear_constraints.add(lin_expr=[[variables, valores]], senses=["L"], rhs=[0] names=['???'])
 
     #visitar a cada cliente
-    for j in range(instancia.cant_clientes):
+    for j in range(cant_clientes):
         # if j == deposito: continue
-        variables = [ var for k in range(instancia.cant_clientes) for var in [f'x{k+1}{j+1}', f'r{k+1}{j+1}']]
+        variables = [var for k in range(cant_clientes) for var in [f'x{k + 1}{j + 1}', f'r{k + 1}{j + 1}']]
         variables.append(f'd{j+1}')
         prob.linear_constraints.add(lin_expr=[[variables, [1.0]*len(variables)]], senses=["G"], rhs=[1.0], names=[f'Asegurarse de visitar cliente {j+1}'])
     
-    for i in range(instancia.cant_clientes):
-        repartidores = [f'r{i+1}{j+1}' for j in range(instancia.cant_clientes)]
-        valores = [ 1 if j in instancia.refrigerados else 0 for j in range(instancia.cant_clientes)]
+    for i in range(cant_clientes):
+        repartidores = [f'r{i+1}{j+1}' for j in range(cant_clientes)]
+        valores = [1 if j in instancia.refrigerados else 0 for j in range(cant_clientes)]
         prob.linear_constraints.add(lin_expr=[[repartidores, valores]], senses=["L"], rhs=[1.0], names=[f'maximo una entrega refrigerada desde {i+1}'] )
+
+    # Restricciones adicionales por repartidor
+    for i in range(cant_clientes):
+        variables = [f'r{i+1}{j+1}' for j in range(cant_clientes)]
+        valores = [1.0] * len(variables)
+        variables.append(f'r{i+1}')
+        valores.append(-4.0)
+        prob.linear_constraints.add(lin_expr=[[variables,valores]], senses=["G"], rhs=[0.0], names=[f"Si un repartidor sale de {i+1} debe hacer 4 entregas"])
+
+        valores[-1] = -cant_clientes
+        prob.linear_constraints.add(lin_expr=[[variables,valores]], senses=["L"], rhs=[0.0], names=[f"Si un repartidor sale de {i+1} r{i+1} debe valer 1"])
+
+    for i in range(cant_clientes):
+        if i in instancia.exclusivos:
+            variables = [f'x{i+1}{j+1}' for j in range(cant_clientes)]
+            variables.append(f'd{i+1}')
+            valores = [1.0] * len(variables)
+            prob.linear_constraints.add(lin_expr=[[variables,valores]], senses=["G"], rhs=[1], names=[f"El cliente {i+1} requiere entrega"])
+
+
+
 
 
 
@@ -195,7 +223,7 @@ def armar_lp(prob, instancia):
     prob.objective.set_sense(prob.objective.sense.minimize)
 
     # Escribir el lp a archivo
-    prob.write('nuevoModelo.lp')
+    prob.write('modeloAdicional.lp')
 
 def resolver_lp(prob):
     
