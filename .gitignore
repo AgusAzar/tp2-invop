@@ -1,2 +1,7 @@
 /venv/
 /venv*
+/modeloAdicional.lp
+/tsp.lp
+/nuevoModelo.lp
+/resultados
+/__pycache__
