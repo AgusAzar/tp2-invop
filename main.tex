@@ -1,0 +1,177 @@
+\documentclass{article}
+\usepackage{paquetes/caratula}
+\usepackage[a4paper, left=2.5cm, right=2.5cm, bottom=2.5cm, top=3.0cm]{geometry}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\makeindex
+
+
+\begin{document}
+
+\titulo{Trabajo Práctico 1}
+\subtitulo{Programación Lineal}
+\fecha{1$^{\text{er}}$ cuatrimestre 2025}
+\materia{Investigación Operativa}
+
+\integrante{Guibaudo, Camila}{682/17}{camiguiba@gmail.com}
+\integrante{Azar, Agustin}{693/21}{Agustin.azar101@gmail.com}
+\integrante{Pages, Julieta}{1691/21}{julib.pages@gmail.com}
+
+\maketitle
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         Modelos de PE      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modelos}
+Se nos presentó un problema donde una empresa debe distribuir productos a varios clientes, y quiere incorporar una nueva metodología para hacerlo. Entonces, para ver si podría ser conveniente, se desarrollaron tres modelos. El primero para representar el modelo actual de distribución, que coincide con el modelo del \textit{The Traveling Salesman Problem}, así podemos ver el costo óptimo actual. Luego se realizó un modelo que pasa a incluir la opción de realizar ciertas entregas en bici desde un punto por el que pasara el camión, sujeto a ciertas restricciones. Y por último, vamos a tener un tercer modelo que consiste en agregar al modelo anterior un par de restricciones que serían deseables, y nos interesa ver cuánto se perdería en caso de tenerlas en cuenta. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         TSP      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modelo de la metodología actual (TSP):} \label{modelo_actual}
+\subsection*{Variables}
+\begin{align*}
+    x_{ij} &\in \{0,1\} && \text{1 si se viaja del nodo } i \text{ al nodo } j \\
+    u_i &\in \mathbb{R} && \text{Variable auxiliar para eliminación de subciclos (MTZ)}
+\end{align*}
+
+\subsection*{Restricciones}
+
+\paragraph{1. Visitar una única vez cada cliente}
+\[
+\sum_{j=1}^{n} x_{ij} = 1 \quad \forall i \in \{1, \dots, n\}
+\]
+
+\paragraph{2. Conservación de flujo}
+\[
+\sum_{\substack{j=1 \\ j \ne i}}^{n} x_{ij} - \sum_{\substack{j=1 \\ j \ne i}}^{n} x_{ji} = 0 \quad \forall i \in \{1, \dots, n\}
+\]
+
+\paragraph{3. Eliminación de subciclos / detour (MTZ)}
+\[
+u_i - u_j + (n - 1)x_{ij} \leq n - 2 \quad \forall i, j \in \{2, \dots, n\},\ i \ne j
+\]
+
+\[
+u_1 = 0
+\]
+
+\[
+1 \leq u_i \leq n - 1 \quad \forall i \in \{2, \dots, n\}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         Nuevo Modelo      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modelo de la nueva metodología (agregar repartidores):} \label{model_repartidores}
+\subsection*{Variables}
+\begin{align*}
+    x_{ij} &\in \{0,1\} && \text{1 si se va del nodo } i \text{ al nodo } j \text{ en camión }\\
+    u_i &\in \mathbb{R} && \text{Variable auxiliar para eliminación de subciclos (MTZ)} \\
+    r_{ij} &\in \{0,1\} && \text{1 si se va del nodo } i \text{ al nodo } j \text{ con repartidor (bici) } \\
+    d_{i} &\in \{0,1\} && \text{1 si el nodo $i$ es depósito } 
+\end{align*}
+
+\subsection*{Parámetros}
+\begin{itemize}
+    \item \( n \): Número total de nodos (clientes + depósito)
+    \item \( i, j \in \{1, \dots, n\} \)
+    \item El nodo \(1\) representa el depósito
+\end{itemize}
+
+\subsection*{Restricciones}
+
+\paragraph{1. Solo un depósito activo}
+\[
+\sum_{i=1}^{n} d_i = 1
+\]
+
+\paragraph{2. El camión pasa máximo una vez por cliente}
+\[
+\sum_{i=1}^{n} x_{ij} \leq 1 \quad \forall j \in \{1, \dots, n\}
+\]
+
+\paragraph{3. Conservación de flujo (camión)}
+\[
+\sum_{\substack{j=1 \\ j \ne i}}^{n} x_{ij} - \sum_{\substack{j=1 \\ j \ne i}}^{n} x_{ji} = 0 \quad \forall i \in \{1, \dots, n\}
+\]
+
+\paragraph{4. El repartidor solo sale de nodos por los que pasó el camión}
+\[
+\sum_{k=1}^{n} x_{ki} + d_i - r_{ij} \geq 0 \quad \forall i,j \in \{1, \dots, n\}
+\]
+
+\paragraph{5. Cumplir la distancia máxima para el repartidor}
+\[
+r_{ij} \cdot \text{dist}_{ij} \leq d_{\text{max}} \quad \forall i,j \in \{1, \dots, n\}
+\]
+
+\paragraph{6. Eliminación de subciclos / detour (MTZ)} 
+\[
+u_i - u_j + (n - 1) x_{ij} - n d_i - n d_j \leq n - 2 \quad \forall i \ne j,\ i,j \in \{1, \dots, n\}
+\]
+\begin{align*}
+u_i + d_i &\geq 1 \quad \forall i \in \{1, \dots, n\} \\
+u_i + n \cdot d_i &\leq n \quad \forall i \in \{1, \dots, n\}
+\end{align*}
+(si $i$ es el depósito ($d_i=1$) entonces no le pedimos nada)
+
+\paragraph{7. Asegurar la visita a cada cliente}
+\[
+\sum_{k=1}^{n} (x_{kj} + r_{kj}) + d_j \geq 1 \quad \forall j \in \{1, \dots, n\}
+\]
+O llego con camión, o llego con repartidor, o soy el depósito.
+
+\paragraph{8. Máximo una entrega refrigerada por nodo}
+\[
+\sum_{j \in R} r_{ij} \leq 1 \quad \forall i \in \{1, \dots, n\}
+\]
+donde \( R \subseteq \{1, \dots, n\} \) es el conjunto de clientes con productos refrigerados.
+
+
+
+
+\subsection{Modelo de la metodología adicional (agregar 2 restricciones):} \label{modelo1}
+
+Este modelo es una extensión del modelo anterior donde se incorporan dos restricciones extra deseables por la empresa: 
+\begin{itemize}
+    \item Cada repartidor contratado realiza al menos 4 entregas.
+    \item Hay determinados clientes que deben ser atendidos exclusivamente por el camión.
+\end{itemize}
+La función objetivo, las variables y las restricciones son iguales a las del modelo anterior. Solo se agregan las siguientes variables y restricciones adicionales:
+
+\subsection*{Variables adicionales}
+
+\begin{align*}
+    r_{i} &\in \{0,1\} && \text{1 si al menos un repartidor parte del nodo } i 
+\end{align*}
+
+\subsection*{Restricciones adicionales}
+
+\paragraph{1. Si un repartidor parte del nodo $i$, entonces debe realizar al menos cuatro entregas}
+\[
+\sum_{j=1}^{n} r_{ij} - 4 \cdot r_{i} \geq 0 \quad \forall i \in \{1, \dots, n\}
+\]
+
+\paragraph{2. Si un repartidor parte del nodo $i$, entonces $r_i = 1$}
+\[
+\sum_{j=1}^{n} r_{ij} - n \cdot r_{i} \leq 0 \quad \forall i \in \{1, \dots, n\}
+\]
+
+\paragraph{3. Si un nodo $i$ es un cliente exclusivo, entonces un camión debe pasar por él}
+\[
+\sum_{j=1}^{n} x_{ij} + d_{i} \geq 1 \quad \forall i \in E
+\]
+donde $E$ es el conjunto de clientes exclusivos.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         Resultados      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Resultados}
+
+
+\end{document}
