@@ -75,7 +75,7 @@ def agregar_variables(prob, instancia):
     # names: nombre (como van a aparecer en el archivo .lp)
 	
     # Poner nombre a las variables y llenar coef_funcion_objetivo
-    nombres_x = [ f'x{i+1}{j+1}' for i in range(instancia.cant_clientes) for j in range(instancia.cant_clientes) ]
+    nombres_x = [ f'x{i+1}_{j+1}' for i in range(instancia.cant_clientes) for j in range(instancia.cant_clientes) ]
     
     coef_x = [ instancia.costos[i][j] for i in range(instancia.cant_clientes) for j in range(instancia.cant_clientes) ]
     coeficientes_funcion_objetivo = coef_x
@@ -108,12 +108,12 @@ def agregar_restricciones(prob, instancia):
 
     # Visitar a todos los clientes una vez
     for i in range(instancia.cant_clientes):
-        variables = [ f'x{i+1}{j+1}' for j in range(instancia.cant_clientes) ]
+        variables = [ f'x{i+1}_{j+1}' for j in range(instancia.cant_clientes) ]
         prob.linear_constraints.add(lin_expr=[[variables, [1.0] * len(variables)]], senses=["E"], rhs=[1], names=[f'Visitar una sola vez cliente {i+1}'])
 
     #conservacion
     for i in range(instancia.cant_clientes):
-        variables = [ x for j in range(instancia.cant_clientes) if j != i for x in [f'x{i+1}{j+1}', f'x{j+1}{i+1}']]
+        variables = [ x for j in range(instancia.cant_clientes) if j != i for x in [f'x{i+1}_{j+1}', f'x{j+1}_{i+1}']]
         prob.linear_constraints.add(lin_expr=[[variables, [1.0, -1.0] * len(variables)]], senses=["E"], rhs=[0], names=[f'Conservacion {i+1}'])
     
     #de tour
@@ -123,7 +123,7 @@ def agregar_restricciones(prob, instancia):
         for j in range(instancia.cant_clientes):
             if i == deposito or j == deposito: continue
             if i != j:
-                prob.linear_constraints.add(lin_expr=[[[f'u{i+1}',f'u{j+1}', f'x{i+1}{j+1}'],[1.0,-1.0,instancia.cant_clientes-1]]], senses=["L"], rhs=[instancia.cant_clientes-2], names=[f'detour x{i+1}{j+1}'])
+                prob.linear_constraints.add(lin_expr=[[[f'u{i+1}',f'u{j+1}', f'x{i+1}_{j+1}'],[1.0,-1.0,instancia.cant_clientes-1]]], senses=["L"], rhs=[instancia.cant_clientes-2], names=[f'detour x{i+1}{j+1}'])
 
     for i in range(instancia.cant_clientes):
         if i == deposito: continue
