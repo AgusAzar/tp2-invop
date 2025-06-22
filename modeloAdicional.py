@@ -58,7 +58,7 @@ class InstanciaRecorridoMixto:
 def cargar_instancia():
     # El 1er parametro es el nombre del archivo de entrada
     if len(sys.argv) < 2:
-        nombre_archivo = "instancia.txt"
+        nombre_archivo = "instancias/instancia_50.txt"
     else:
         nombre_archivo = sys.argv[1].strip()
     # Crea la instancia vacia
@@ -78,14 +78,13 @@ def agregar_variables(prob, instancia):
     # names: nombre (como van a aparecer en el archivo .lp)
 
     # Poner nombre a las variables y llenar coef_funcion_objetivo
-    nombres_x = [f'x{i + 1}_{j + 1}' for i in range(instancia.cant_clientes) for j in range(instancia.cant_clientes)]
-    nombres_r = [f'r{i + 1}_{j + 1}' for i in range(instancia.cant_clientes) for j in range(instancia.cant_clientes)]
+    nombres_x = [f'x{i + 1}_{j + 1}' for i in range(instancia.cant_clientes) for j in range(instancia.cant_clientes) if i != j]
+    nombres_r = [f'r{i + 1}_{j + 1}' for i in range(instancia.cant_clientes) for j in range(instancia.cant_clientes) if i != j]
 
     nombres = nombres_x + nombres_r
 
-    coef_x = [instancia.costos[i][j] for i in range(instancia.cant_clientes) for j in range(instancia.cant_clientes)]
-    coef_r = [instancia.costo_repartidor for _ in range(instancia.cant_clientes) for _ in
-              range(instancia.cant_clientes)]
+    coef_x = [instancia.costos[i][j] for i in range(instancia.cant_clientes) for j in range(instancia.cant_clientes) if i != j]
+    coef_r = [instancia.costo_repartidor] * len(nombres_r)
     coeficientes_funcion_objetivo = coef_x + coef_r
 
     cant_variables = len(nombres)
@@ -131,21 +130,23 @@ def agregar_restricciones(prob, instancia):
     # no visitar un cliente más de una vez
 
     for j in range(cant_clientes):
-        variables = [f'x{i + 1}_{j + 1}' for i in range(cant_clientes)]
+        variables = [f'x{i + 1}_{j + 1}' for i in range(cant_clientes) if i != j]
         prob.linear_constraints.add(lin_expr=[[variables, [1.0] * len(variables)]], senses=["L"], rhs=[1],
                                     names=[f'Visitar una sola vez cliente {j + 1}'])
 
     # no enviar a un repartidor a una distancia mayor a la maxima
     for i in range(cant_clientes):
         for j in range(cant_clientes):
-            prob.linear_constraints.add(lin_expr=[[[f'r{i + 1}_{j + 1}'], [instancia.distancias[i][j]]]], senses=["L"],
+            if i !=j:
+                prob.linear_constraints.add(lin_expr=[[[f'r{i + 1}_{j + 1}'], [instancia.distancias[i][j]]]], senses=["L"],
                                         rhs=[instancia.d_max], names=[f'distancia maxima {i + 1} a {j + 1}'])
 
     # los repartidores deben de salir de lugares donde el camion frenó
     for i in range(cant_clientes):
         # if i == deposito: continue
         for j in range(cant_clientes):
-            variables = [f'x{k + 1}_{i + 1}' for k in range(cant_clientes)]
+            if i == j: continue
+            variables = [f'x{k + 1}_{i + 1}' for k in range(cant_clientes) if k != i]
             valores = [1.0] * len(variables)
             variables.append(f'd{i + 1}')
             valores.append(1.0)
@@ -182,20 +183,20 @@ def agregar_restricciones(prob, instancia):
     # visitar a cada cliente
     for j in range(cant_clientes):
         # if j == deposito: continue
-        variables = [var for k in range(cant_clientes) for var in [f'x{k + 1}_{j + 1}', f'r{k + 1}_{j + 1}']]
+        variables = [var for k in range(cant_clientes) for var in [f'x{k + 1}_{j + 1}', f'r{k + 1}_{j + 1}'] if k != j ]
         variables.append(f'd{j + 1}')
         prob.linear_constraints.add(lin_expr=[[variables, [1.0] * len(variables)]], senses=["G"], rhs=[1.0],
                                     names=[f'Asegurarse de visitar cliente {j + 1}'])
 
     for i in range(cant_clientes):
-        repartidores = [f'r{i + 1}_{j + 1}' for j in range(cant_clientes)]
-        valores = [1 if j in instancia.refrigerados else 0 for j in range(cant_clientes)]
+        repartidores = [f'r{i + 1}_{j + 1}' for j in range(cant_clientes) if i != j]
+        valores = [1 if j in instancia.refrigerados else 0 for j in range(cant_clientes) if i != j]
         prob.linear_constraints.add(lin_expr=[[repartidores, valores]], senses=["L"], rhs=[1.0],
                                     names=[f'maximo una entrega refrigerada desde {i + 1}'])
 
     # Restricciones adicionales por repartidor
     for i in range(cant_clientes):
-        variables = [f'r{i + 1}_{j + 1}' for j in range(cant_clientes)]
+        variables = [f'r{i + 1}_{j + 1}' for j in range(cant_clientes) if i != j]
         valores = [1.0] * len(variables)
         variables.append(f'r{i + 1}')
         valores.append(-4.0)
@@ -208,7 +209,7 @@ def agregar_restricciones(prob, instancia):
 
     for i in range(cant_clientes):
         if i in instancia.exclusivos:
-            variables = [f'x{i + 1}_{j + 1}' for j in range(cant_clientes)]
+            variables = [f'x{i + 1}_{j + 1}' for j in range(cant_clientes) if i != j]
             variables.append(f'd{i + 1}')
             valores = [1.0] * len(variables)
             prob.linear_constraints.add(lin_expr=[[variables, valores]], senses=["G"], rhs=[1],
