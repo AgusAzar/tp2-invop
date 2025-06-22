@@ -7,11 +7,11 @@ def distancia_eucleideana(x, y):
 
 n = 50
 costo_repartidor = 5
-dist_max = 60
+dist_max = 100
 cant_refrigerados = 5
 cant_exclusivos = 5
 
-costo_max_camion = 20
+costo_max_camion = 100
 
 ids = [str(i) for i in range(1,n+1)]
 
