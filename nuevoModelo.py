@@ -187,11 +187,14 @@ def armar_lp(prob, instancia):
     # Escribir el lp a archivo
     prob.write('nuevoModelo.lp')
 
-def resolver_lp(prob):
+def resolver_lp(prob, nodos, variables, hprimal):
     
     # Definir los parametros del solver
-    #prob.parameters.mip.....
-       
+    prob.parameters.mip.strategy.nodeselect.set(nodos)  # 0: DFS, 1: Best Bound, 2: Best Estimate, 3: Best Estimate Alternative
+    prob.parameters.mip.strategy.variableselect.set(variables)  # 0: Strong Branching, 1: Pseudo Cost, 2: Objective Coefficient, 3: Random
+    prob.parameters.mip.strategy.heuristiceffort.set(hprimal)  # 0: None, 1: Low, 2: Medium, 3: High
+    prob.parameters.paramdisplay.set(1)
+    
     # Resolver el lp
     prob.solve()
 
@@ -216,8 +219,7 @@ def mostrar_solucion(prob,instancia):
         if not val == 0:
             print(var,": ", val)
 
-def main():
-    
+def main(nodos, variables, hprimal):
     # Lectura de datos desde el archivo de entrada
     instancia = cargar_instancia()
     
@@ -228,10 +230,18 @@ def main():
     armar_lp(prob,instancia)
 
     # Resolucion del modelo
-    resolver_lp(prob)
+    resolver_lp(prob, nodos, variables, hprimal)
 
     # Obtencion de la solucion
     mostrar_solucion(prob,instancia)
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) < 5:
+        print("Uso: python nuevoModelo.py <instancia_path> con seleccion de nodos = <nodos>")
+        sys.exit(1)
+    
+    instancia_path = sys.argv[1]
+    nodos = int(sys.argv[2])
+    variables = int(sys.argv[3])
+    hprimal = int(sys.argv[4])
+    main(nodos, variables, hprimal)
