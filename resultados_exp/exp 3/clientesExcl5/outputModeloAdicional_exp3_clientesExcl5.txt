@@ -1,0 +1,122 @@
+Version identifier: 22.1.1.0 | 2022-11-28 | 9160aff4d
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+MIP Presolve eliminated 820 rows and 400 columns.
+MIP Presolve modified 40 coefficients.
+Reduced MIP has 486 rows, 420 columns, and 3640 nonzeros.
+Reduced MIP has 400 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (2.72 ticks)
+Probing time = 0.00 sec. (2.07 ticks)
+Tried aggregator 1 time.
+Detecting symmetries...
+Reduced MIP has 486 rows, 420 columns, and 3640 nonzeros.
+Reduced MIP has 400 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (2.23 ticks)
+Probing time = 0.00 sec. (2.07 ticks)
+Clique table members: 21.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 12 threads.
+Root relaxation solution time = 0.00 sec. (1.37 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+      0     0      778.0052    49                    778.0052       78         
+      0     0      945.0000    45                    Cuts: 43      160         
+      0     0      985.0000    41                    Cuts: 19      199         
+      0     0      990.0000    46                    Cuts: 16      214         
+      0     0      990.0000    44                    Cuts: 14      227         
+      0     0      990.0000    43                 ZeroHalf: 2      229         
+Detecting symmetries...
+*     0+    0                         1160.0000      990.0000            14.66%
+*     0+    0                         1150.0000      990.0000            13.91%
+      0     0  -1.00000e+75     0     1150.0000      990.0000      229   13.91%
+Detecting symmetries...
+      0     2      990.0000    43     1150.0000      990.0000      229   13.91%
+Elapsed time = 0.41 sec. (242.86 ticks, tree = 0.02 MB, solutions = 2)
+*   191+    7                         1140.0000      990.4622            13.12%
+*   240+    2                         1110.0000      990.4622            10.77%
+   5860  2246     1083.6842    10     1110.0000     1042.2982    55180    6.10%
+
+Performing restart 1
+
+Repeating presolve.
+Tried aggregator 1 time.
+MIP Presolve eliminated 98 rows and 98 columns.
+MIP Presolve modified 459 coefficients.
+Reduced MIP has 388 rows, 322 columns, and 2736 nonzeros.
+Reduced MIP has 302 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (2.53 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 388 rows, 322 columns, and 2736 nonzeros.
+Reduced MIP has 302 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (1.71 ticks)
+Represolve time = 0.01 sec. (8.94 ticks)
+   6241     0      992.5000    60     1110.0000      Cuts: 39    69989    5.80%
+   6241     0      997.9585    66     1110.0000      Cuts: 21    70035    5.80%
+   6241     0      999.6074    67     1110.0000      Cuts: 38    70069    5.80%
+   6241     0     1000.0330    72     1110.0000      Cuts: 16    70135    5.80%
+   6241     0     1000.8491    70     1110.0000      Cuts: 57    70174    5.80%
+   6241     2     1000.8491    70     1110.0000     1045.6140    70174    5.80%
+   9697  1824     1065.8653    57     1110.0000     1045.6140   104787    5.80%
+  13726  2604        cutoff           1110.0000     1053.5417   154947    5.09%
+  17245  2206        cutoff           1110.0000     1069.7368   201486    3.63%
+
+GUB cover cuts applied:  1
+Cover cuts applied:  42
+Flow cuts applied:  3
+Mixed integer rounding cuts applied:  41
+Zero-half cuts applied:  13
+Lift and project cuts applied:  6
+Gomory fractional cuts applied:  17
+
+Root node processing (before b&c):
+  Real time             =    0.41 sec. (242.63 ticks)
+Parallel b&c, 12 threads:
+  Real time             =    3.21 sec. (1516.73 ticks)
+  Sync time (average)   =    0.64 sec.
+  Wait time (average)   =    0.01 sec.
+                          ------------
+Total (root+branch&cut) =    3.61 sec. (1759.36 ticks)
+Funcion objetivo:  1110.0 (integer optimal solution)
+x1_4 :  1.0
+x2_13 :  1.0
+x3_1 :  1.0
+x4_6 :  1.0
+x5_2 :  1.0
+x6_10 :  1.0
+x7_14 :  1.0
+x8_19 :  1.0
+x9_20 :  1.0
+x10_5 :  1.0
+x11_8 :  1.0
+x12_11 :  1.0
+x13_15 :  1.0
+x14_17 :  1.0
+x15_18 :  1.0
+x16_3 :  1.0
+x17_9 :  1.0
+x18_12 :  1.0
+x19_7 :  1.0
+x20_16 :  1.0
+u1 :  1.0
+u2 :  6.0
+u4 :  2.0
+u5 :  5.0
+u6 :  3.0
+u7 :  14.0
+u8 :  12.0
+u9 :  17.0
+u10 :  4.0
+u11 :  11.0
+u12 :  10.0
+u13 :  7.0
+u14 :  15.0
+u15 :  8.0
+u16 :  19.0
+u17 :  16.0
+u18 :  9.0
+u19 :  13.0
+u20 :  18.0
+d3 :  1.0
