@@ -103,11 +103,6 @@ def agregar_variables(prob, instancia):
                        types=([prob.variables.type.binary] * instancia.cant_clientes),
                        names=[f'd{i + 1}' for i in range(instancia.cant_clientes)])
 
-    # Hacer 4 entregar por repartidor
-    r_aux = [f'r{i + 1}' for i in range(instancia.cant_clientes)]
-    prob.variables.add(obj=[0] * len(r_aux), types=[prob.variables.type.binary] * len(r_aux), names=r_aux)
-
-
 def agregar_restricciones(prob, instancia):
     # Agregar las restricciones ax <= (>= ==) b:
     # funcion 'add' de 'linear_constraints' con parametros:
@@ -193,19 +188,6 @@ def agregar_restricciones(prob, instancia):
         valores = [1 if j in instancia.refrigerados else 0 for j in range(cant_clientes) if i != j]
         prob.linear_constraints.add(lin_expr=[[repartidores, valores]], senses=["L"], rhs=[1.0],
                                     names=[f'maximo una entrega refrigerada desde {i + 1}'])
-
-    # Restricciones adicionales por repartidor
-    for i in range(cant_clientes):
-        variables = [f'r{i + 1}_{j + 1}' for j in range(cant_clientes) if i != j]
-        valores = [1.0] * len(variables)
-        variables.append(f'r{i + 1}')
-        valores.append(-4.0)
-        prob.linear_constraints.add(lin_expr=[[variables, valores]], senses=["G"], rhs=[0.0],
-                                    names=[f"Si un repartidor sale de {i + 1} debe hacer 4 entregas"])
-
-        valores[-1] = -cant_clientes
-        prob.linear_constraints.add(lin_expr=[[variables, valores]], senses=["L"], rhs=[0.0],
-                                    names=[f"Si un repartidor sale de {i + 1} r{i + 1} debe valer 1"])
 
     for i in range(cant_clientes):
         if i in instancia.exclusivos:
