@@ -209,7 +209,7 @@ def armar_lp(prob, instancia):
     prob.objective.set_sense(prob.objective.sense.minimize)
 
     # Escribir el lp a archivo
-    prob.write('modeloAdicional.lp')
+    prob.write('modeloAdicionalRequeridos.lp')
 
 
 def resolver_lp(prob):
