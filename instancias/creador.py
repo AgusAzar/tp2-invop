@@ -5,9 +5,9 @@ from itertools import product
 def distancia_eucleideana(x, y):
     return int(math.sqrt((x[0] - y[0])** 2 + (x[1] - y[1])** 2))
 
-n = 70
-costo_repartidor = 5
-dist_max = 80
+n = 40
+costo_repartidor = 12
+dist_max = 100
 cant_refrigerados = 5
 cant_exclusivos = 1
 
