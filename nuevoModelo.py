@@ -217,7 +217,7 @@ def mostrar_solucion(prob,instancia):
         if not val == 0:
             print(var,": ", val)
 
-def main(prob, nodos, raiz):
+def main(nodos, raiz):
     # Lectura de datos desde el archivo de entrada
     instancia = cargar_instancia()
     
