@@ -10,18 +10,12 @@ def main():
     # Crear carpteta de resultados si no existe
     if not os.path.exists('resultados'):
         os.makedirs('resultados')
-    
-    os.system('python nuevoModelo.py instancias/instancia.txt 1 0 1 > instancias/outputNuevoModelo.txt')
-    # os.system('python nuevoModelo.py 3_min/instancia_50_5.txt 0 0 1 > 3_min/outputNuevoModelo_dfs.txt')
-    # os.system('python nuevoModelo.py 3_min/instancia_50_5.txt 2 0 1 > 3_min/outputNuevoModelo_bestT.txt')
-    # os.system('python nuevoModelo.py 3_min/instancia_50_5.txt 3 0 1 > 3_min/outputNuevoModelo_bestT_alt.txt')
-    
-    os.system('python modeloAdicionalRepartidores.py instancias/instancia.txt 1 0 1 > instancias/outputModeloAdicionalRepartidores.txt')
-    os.system('python modeloAdicionalRequeridos.py instancias/instancia.txt 1 0 1 > instancias/outputModeloAdicionalRequeridos.txt')
-    # os.system('python modeloAdicionalRepartidores.py 3_min/instancia_50_5.txt 0 0 1 > 3_min/outputModeloAdicional_dfs.txt')
-    # os.system('python modeloAdicionalRepartidores.py 3_min/instancia_50_5.txt 2 0 1 > 3_min/outputModeloAdicional_bestT.txt')
-    # os.system('python modeloAdicionalRepartidores.py 3_min/instancia_50_5.txt 3 0 1 > 3_min/outputModeloAdicional_bestT_alt.txt')
+        
+    os.system('python nuevoModelo.py intancias/instancia.txt 1 0 > intancias/outputNuevoModelo_default.txt')
 
+    os.system('python nuevoModelo.py intancias/instancia.txt 0 0 > intancias/outputNuevoModelo_dfs.txt')
+
+    os.system('python nuevoModelo.py intancias/instancia.txt 0 2 > intancias/outputNuevoModelo_dfs_raizA.txt')
 
 if __name__ == '__main__':
     main()

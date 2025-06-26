@@ -251,7 +251,7 @@ def mostrar_solucion(prob, instancia):
             print(var, ": ", val)
 
 
-def main():
+def main(nodos, variables, hprimal):
     # Lectura de datos desde el archivo de entrada
     instancia = cargar_instancia()
 
@@ -262,7 +262,7 @@ def main():
     armar_lp(prob, instancia)
 
     # Resolucion del modelo
-    resolver_lp(prob)
+    resolver_lp(prob, nodos, variables, hprimal)
 
     # Obtencion de la solucion
     mostrar_solucion(prob, instancia)

@@ -148,11 +148,7 @@ def armar_lp(prob, instancia):
     # Escribir el lp a archivo
     prob.write('tsp.lp')
 
-def resolver_lp(prob):
-    
-    # Definir los parametros del solver
-    #prob.parameters.mip.....
-       
+def resolver_lp(prob):       
     # Resolver el lp
     prob.solve()
 
