@@ -9,7 +9,7 @@ n = 70
 costo_repartidor = 5
 dist_max = 80
 cant_refrigerados = 5
-cant_exclusivos = 5
+cant_exclusivos = 1
 
 costo_max_camion = 100
 
