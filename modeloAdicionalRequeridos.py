@@ -40,7 +40,7 @@ class InstanciaRecorridoMixto:
         cantidad_exclusivos = int(f.readline())
         # leemos los clientes exclusivos
         for i in range(cantidad_exclusivos):
-            self.exclusivos.append(int(f.readline()))
+            self.exclusivos.append(int(f.readline())-1)
 
         # leemos las distancias y costos entre clientes
         lineas = f.readlines()

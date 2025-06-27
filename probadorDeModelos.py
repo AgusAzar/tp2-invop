@@ -10,11 +10,12 @@ def main():
     # Crear carpteta de resultados si no existe
     if not os.path.exists('resultados'):
         os.makedirs('resultados')
-    for instancia in os.listdir('instancias'):
-        instancia_size = instancia.split('.')[0].split('_')[1]
-        os.system(f'python nuevoModelo.py instancias/{instancia} 1 0 > resultados/outputNuevoModelo_{instancia_size}_default.txt')
-        os.system(f'python nuevoModelo.py instancias/{instancia} 0 0 > resultados/outputNuevoModelo_{instancia_size}_dfs.txt')
-        os.system(f'python nuevoModelo.py instancias/{instancia} 0 2 > resultados/outputNuevoModelo_{instancia_size}_dfs_raizA.txt')
+    for instancia in os.listdir('resultados_exp/exp 3/instancias'):
+        print(instancia)
+        isntancia_name = instancia.split('.')[0]
+        os.system(f'python nuevoModelo.py "resultados_exp/exp 3/instancias/{instancia}" 1 0 > resultados/outputNuevoModelo_{isntancia_name}.txt')
+        os.system(f'python modeloAdicionalRequeridos.py "resultados_exp/exp 3/instancias/{instancia}" 0 0 > resultados/outputAdicionalRequeridos_{isntancia_name}.txt')
+
 
 if __name__ == '__main__':
     main()

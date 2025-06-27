@@ -1,0 +1,208 @@
+Version identifier: 22.1.1.0 | 2022-11-28 | 9160aff4d
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+MIP Presolve eliminated 750 rows and 352 columns.
+MIP Presolve modified 40 coefficients.
+Reduced MIP has 511 rows, 448 columns, and 4160 nonzeros.
+Reduced MIP has 428 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (2.74 ticks)
+Probing time = 0.00 sec. (1.64 ticks)
+Tried aggregator 1 time.
+Detecting symmetries...
+Reduced MIP has 511 rows, 448 columns, and 4160 nonzeros.
+Reduced MIP has 428 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (2.48 ticks)
+Probing time = 0.00 sec. (1.64 ticks)
+Clique table members: 23.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 8 threads.
+Root relaxation solution time = 0.00 sec. (1.52 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+      0     0      643.5724    55                    643.5724       96         
+      0     0      743.5027    57                    Cuts: 30      135         
+      0     0      824.0000    60                    Cuts: 37      165         
+      0     0      833.3333    52                ZeroHalf: 14      178         
+      0     0      860.0000    42                ZeroHalf: 14      192         
+      0     0      870.0000    47                ZeroHalf: 12      236         
+Detecting symmetries...
+      0     0      875.0000    63                    Cuts: 12      259         
+      0     0      897.3718    67                 ZeroHalf: 7      291         
+      0     0      905.7471    62                     Cuts: 8      316         
+      0     0      909.3750    63                    Cuts: 13      335         
+      0     0      916.4103    60                     Cuts: 6      352         
+      0     0      919.4444    69                     Cuts: 7      367         
+      0     0      923.6538    72                     Cuts: 7      404         
+      0     0      924.6254    78                     Cuts: 8      416         
+      0     0      925.3061    78                 ZeroHalf: 6      424         
+*     0+    0                         1380.0000      925.3061            32.95%
+      0     0      926.6667    76     1380.0000   ZeroHalf: 4      436   32.85%
+      0     0      926.8000    73     1380.0000   ZeroHalf: 3      447   32.84%
+Detecting symmetries...
+      0     2      926.8000    71     1380.0000      926.8000      447   32.84%
+Elapsed time = 0.17 sec. (124.70 ticks, tree = 0.02 MB, solutions = 1)
+*    18+    1                         1370.0000      927.5000            32.30%
+*   192+    5                         1330.0000      941.2500            29.23%
+*   425+  248                         1170.0000      941.2500            19.55%
+*   552+  247                         1130.0000      955.0000            15.49%
+*  2373  1204      integral     0     1110.0000      980.0000    28793   11.71%
+   3527  1656        cutoff           1110.0000      988.9474    43109   10.91%
+
+Performing restart 1
+
+Repeating presolve.
+Tried aggregator 1 time.
+MIP Presolve eliminated 26 rows and 26 columns.
+MIP Presolve modified 292 coefficients.
+Reduced MIP has 485 rows, 422 columns, and 3900 nonzeros.
+Reduced MIP has 402 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (3.18 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 485 rows, 422 columns, and 3900 nonzeros.
+Reduced MIP has 402 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (2.38 ticks)
+Represolve time = 0.01 sec. (11.24 ticks)
+   3572     0      945.7692    81     1110.0000      Cuts: 35    49603   10.50%
+   3572     0      947.1685    83     1110.0000      Cuts: 32    49625   10.50%
+   3572     0      947.5758    74     1110.0000      Cuts: 24    49638   10.50%
+   3572     0      950.0000    85     1110.0000      Cuts: 21    49678   10.50%
+   3572     0      950.4223    72     1110.0000      Cuts: 17    49718   10.50%
+   3572     0      953.3987    77     1110.0000      Cuts: 38    49749   10.50%
+   3572     0      953.4889    83     1110.0000      Cuts: 15    49761    9.53%
+   3572     2      953.4889    79     1110.0000     1004.2105    49761    9.53%
+   5156   920     1003.4211    31     1110.0000     1004.2105    63901    9.53%
+*  6287+ 1810                         1100.0000     1004.2105             8.71%
+   8284  3056     1070.6316    20     1100.0000     1004.2105    87868    8.71%
+  11562  5113        cutoff           1100.0000     1010.3509   114559    8.15%
+  14571  7213     1054.4211    25     1100.0000     1013.6565   147975    7.85%
+  17713  9049        cutoff           1100.0000     1016.3158   178107    7.61%
+  21288 11352     1073.6842     8     1100.0000     1018.2237   214454    7.43%
+  24111 12397        cutoff           1100.0000     1020.6015   237836    7.22%
+  34277 16329     1040.6433    18     1100.0000     1026.4444   345245    6.69%
+Elapsed time = 4.59 sec. (3620.32 ticks, tree = 6.36 MB, solutions = 7)
+
+Performing restart 2
+
+Repeating presolve.
+Tried aggregator 1 time.
+MIP Presolve eliminated 20 rows and 50 columns.
+MIP Presolve modified 371 coefficients.
+Reduced MIP has 465 rows, 372 columns, and 5352 nonzeros.
+Reduced MIP has 352 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (3.76 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 465 rows, 372 columns, and 5352 nonzeros.
+Reduced MIP has 352 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (2.96 ticks)
+Represolve time = 0.03 sec. (30.46 ticks)
+  38809     0      957.6023    89     1100.0000      Cuts: 27   421138    6.27%
+  38809     0      957.8836    87     1100.0000      Cuts: 14   421154    6.27%
+  38809     0      958.4634    81     1100.0000      Cuts: 47   421188    6.27%
+  38809     0      958.6541    94     1100.0000      Cuts: 24   421209    6.27%
+  38809     0      958.8401    89     1100.0000       Cuts: 9   421216    6.27%
+  38809     0      961.5859    78     1100.0000      Cuts: 37   421270    6.27%
+  38809     0      963.6935    84     1100.0000      Cuts: 41   421305    6.27%
+  38809     0      964.1899    89     1100.0000      Cuts: 21   421322    6.27%
+  38809     0      964.2508    92     1100.0000      Cuts: 19   421354    6.27%
+  38809     0      966.9073    79     1100.0000      Cuts: 14   421379    6.27%
+  38809     0      967.7972    72     1100.0000      Cuts: 16   421395    6.27%
+
+Repeating presolve.
+Tried aggregator 1 time.
+MIP Presolve eliminated 14 rows and 22 columns.
+MIP Presolve modified 14 coefficients.
+Reduced MIP has 451 rows, 350 columns, and 5336 nonzeros.
+Reduced MIP has 330 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (2.94 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 451 rows, 350 columns, and 5336 nonzeros.
+Reduced MIP has 330 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (2.93 ticks)
+Represolve time = 0.02 sec. (25.87 ticks)
+  38809     0      969.2042    85     1100.0000      Cuts: 53   421602    6.27%
+  38809     0      969.5022    86     1100.0000      Cuts: 12   421614    6.27%
+  38809     0      969.5940    95     1100.0000       Cuts: 7   421627    6.27%
+  38809     0      970.9410    83     1100.0000      Cuts: 25   421660    6.27%
+  38809     0      974.7125    78     1100.0000      Cuts: 28   421710    6.27%
+  38809     0      975.2679    87     1100.0000      Cuts: 34   421737    6.27%
+  38809     0      975.8491    86     1100.0000      Cuts: 24   421759    6.27%
+  38809     0      976.0000    58     1100.0000      Cuts: 17   421773    6.27%
+  38809     0      976.0000    39     1100.0000      Cuts: 37   421799    6.27%
+  38809     0      976.0314    92     1100.0000      Cuts: 20   421817    6.27%
+  38809     2      976.0314    86     1100.0000     1031.0262   421817    6.27%
+  46714  4604     1076.3158    32     1100.0000     1031.0262   489674    6.27%
+  58176 10891        cutoff           1100.0000     1031.0262   616509    6.27%
+  68438 15465     1062.1053    43     1100.0000     1032.5731   737101    6.13%
+  77126 18015     1071.0526    23     1100.0000     1036.3459   848445    5.79%
+  86049 20721     1066.3158    20     1100.0000     1040.9544   963680    5.37%
+  95048 22384        cutoff           1100.0000     1044.5614  1072582    5.04%
+ 103085 23009     1054.7368    40     1100.0000     1047.8947  1172500    4.74%
+ 111471 23257     1060.0000    29     1100.0000     1051.8576  1268692    4.38%
+ 119998 23188     1070.8772    16     1100.0000     1054.6711  1384162    4.12%
+Elapsed time = 19.80 sec. (14664.98 ticks, tree = 9.30 MB, solutions = 7)
+ 128808 21744        cutoff           1100.0000     1057.3684  1486952    3.88%
+ 137918 19844        cutoff           1100.0000     1061.0526  1600176    3.54%
+ 147872 16118        cutoff           1100.0000     1065.1128  1721294    3.17%
+ 158242 12227        cutoff           1100.0000     1070.5263  1817645    2.68%
+ 170156  4312     1083.4211     7     1100.0000     1080.1754  1929456    1.80%
+
+GUB cover cuts applied:  1
+Cover cuts applied:  50
+Flow cuts applied:  1
+Mixed integer rounding cuts applied:  50
+Zero-half cuts applied:  54
+Lift and project cuts applied:  66
+Gomory fractional cuts applied:  15
+
+Root node processing (before b&c):
+  Real time             =    0.17 sec. (124.45 ticks)
+Parallel b&c, 8 threads:
+  Real time             =   27.31 sec. (19589.72 ticks)
+  Sync time (average)   =    3.28 sec.
+  Wait time (average)   =    0.01 sec.
+                          ------------
+Total (root+branch&cut) =   27.48 sec. (19714.17 ticks)
+Funcion objetivo:  1100.0 (integer optimal solution)
+x1_14 :  1.0
+x3_18 :  1.0
+x4_17 :  1.0
+x5_6 :  1.0
+x6_12 :  1.0
+x7_5 :  1.0
+x8_3 :  1.0
+x9_8 :  1.0
+x12_16 :  1.0
+x14_15 :  1.0
+x15_9 :  1.0
+x16_4 :  1.0
+x17_1 :  1.0
+x18_19 :  1.0
+x19_7 :  1.0
+r1_13 :  1.0
+r5_10 :  1.0
+r6_20 :  1.0
+r8_2 :  1.0
+r17_11 :  1.0
+u1 :  9.0
+u2 :  1.0
+u3 :  14.0
+u4 :  7.0
+u5 :  18.0
+u6 :  19.0
+u7 :  17.0
+u8 :  13.0
+u9 :  12.0
+u10 :  1.0
+u11 :  19.0
+u13 :  1.0
+u14 :  10.0
+u15 :  11.0
+u16 :  6.0
+u17 :  8.0
+u18 :  15.0
+u19 :  16.0
+u20 :  1.0
+d12 :  1.0
