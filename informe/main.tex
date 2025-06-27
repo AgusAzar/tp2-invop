@@ -355,7 +355,7 @@
     \resizebox{\textwidth}{!}{
     \begin{tabular}{|c|c|c|c|c|}
     \hline
-    \textbf{Densidad ciudad} & \textbf{Costo Nuevo Modelo} & \textbf{Costo Modelo Adicional} & \thead{Envios realizados \\ por repartidores} & \textbf{Pérdida (\%)} \\
+    \textbf{Densidad ciudad} & \textbf{Costo Nuevo Modelo} & \textbf{Costo Modelo Adicional (repartidores)} & \thead{Envios realizados \\ por repartidores} & \textbf{Pérdida (\%)} \\
     \hline
     Muy densa    & 200  & 200  &  16 | 16 & 0\% \\
     Densa        & 640  & 780  &  8 | 11 & 22,0\% \\
@@ -474,6 +474,10 @@
     \caption{Comparación de tiempos para varias instancias}
     \end{table}
 
+    Notamos que el tiempo de ejecución con selección de nodos por dfs en todos los casos implicó un ahorro de tiempo, a lo sumo varía que tanto impacto. Esto nos parecería indicar que para una instancia cualquiera de nuestro problema, usar dfs va a ser más rápido que la configuración totalmente defalut. 
+    
+    En cambio el ahorro de tiempo de combinar la selección con dfs, y usar planos de cortes agresivos en el nodo raíz, depende mucho de la instancia. EN algunas significó un ahorro incluso mayor que con dfs, en otras se mantuvo similar, y en otras empeoró bastante. No notamos ningún patrón claro que indique cuando puede mejorar y cuánto empeorar. Pero esto nos marca que cada instancia particular puede tener una combinación de parámetros óptima particular a sí misma.
+
     \section{Conclusiones}
     \subsection{Ganancia de implementar la nueva metodología}
     Según los resultados obtenidos, notamos que el costo del repartidor y la densidad de la ciudad (o la distancia máxima del repartidor) son significativos en cuanto a la ganancia obtenida.
@@ -484,18 +488,14 @@
 
     Por lo tanto, si se tiene un equilibrio en la distancia que puede cubrir un repartidor, y el costo del mismo, el ahorro puede ser muy significativo. Pero mientras más restrinja a los repartidores, o más caros sean, podría llegar incluso o no presentar ningún beneficio.
 
-    \subsection{Pérdida de implementar la restricción de mínimo 4 repartidores}
-    TODO
-
-    \subsection{Pérdida de implementar la restricción de clientes exclusivos}
-    TODO
-
-    \subsection{Pérdida de implementar ambas restricciones adicionales}
-    En caso de implementar ambas restricciones, notamos que la pérdida afectará particularmente a las ciudades densas. Esto tiene sentido si pensamos que estas eran las que más ahorro tenían al poder usar repartidores. Pero al poner clientes exclusivos, y pedir que no haya menos de cuatro pedidos por repartidor desde cada punto, reducimos la libertad para explotar ese beneficio. Por lo tanto, gran parte del ahorro que habíamos tenido se podría ver afectado.
+    \subsection{Pérdida de implementar restricciones adicionales}
+    En caso de tanto la restricción a los repartidores como al implementar ambas restricciones, notamos que la pérdida afectará particularmente a las ciudades densas. Esto tiene sentido si pensamos que estas eran las que más ahorro tenían al poder usar repartidores. Pero al poner clientes exclusivos, y pedir que no haya menos de cuatro pedidos por repartidor desde cada punto, reducimos la libertad para explotar ese beneficio. Por lo tanto, gran parte del ahorro que habíamos tenido se podría ver afectado.
 
     En cambio en el caso de ciudades más dispersas, ya de por sí el ahorro era poco, al usar pocos repartidores, por lo tanto, incluir estas restricciones no empeorará mucho, ya que como mucho va a ser tan costoso como TSP.
     
-    La cantidad de clientes exclusivos también puede afectar la ganancia, sin embargo la pérdida en este caso no es tan lineal, ya que dependerá de qué nodos son marcados para ser exclusivos. Si justo elegimos varios que ya estaban en el camino del camión, no se verá afectado.
+    En cuanto a la otra restricción, la cantidad de clientes exclusivos también puede afectar la ganancia, sin embargo la pérdida en este caso no es tan lineal. Esto puede deberse a que va a depender de qué nodos son marcados para ser exclusivos. Si justo elegimos varios que de todas formas convenía que pase el camino del camión, no se verá afectado.
+
+    Será conveniente tener cuidado entonces con el caso particular del cuál partimos, y de la cantidad de ciudades exclusivas marcadas, qué tanta pérdida respecto a la ganancia original representa agregar estas restricciones.
 
     \subsection{Tiempo de cómputo}
     Notamos que el tiempo de cómputo depende fuertemente no solo del tamaño de la instancia (cantidad de clientes), sino de todos sus parámetros. En particular, notamos un fuerte aumento en el tiempo de cómputo al tener costos de repartidor cada vez más cercanos a los del camión, y distancia del repartidor cada vez más abarcativa respecto a las distancias de los clientes.
