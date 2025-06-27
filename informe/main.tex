@@ -346,7 +346,7 @@
     Lo único que sí parece claro es que al aumentar el número de clientes exclusivos, más probable parece ser que el número de pedidos realizados por repartidores sea 0, lo cual tiene sentido. \\
     Para hacer un buen análisis del impacto de de la aplicación del Modelo Adicional, lo ideal sería trabajar con una instancia (ciudad) específica.
 
-    \subsubsection{Experimento 4: modelo adicional ante ciudades con distintas densidades de clientes}
+    \subsubsection{Experimento 4: Modelo Adicional ante ciudades con distintas densidades de clientes}
 
     En este experimento trabajamos con las mismas instancias "ciudad densa", "ciudad dispersa", "ciudad muy densa", "ciudad moderada" y "ciudad muy dispersa" del experimento 2. Pero ahora, sobre cada una de ellas probaremos el Nuevo Modelo y el Modelo Adicional con restricciones sobre los repartidores.
 
@@ -368,11 +368,11 @@
     \caption{Comparación de costos entre metodologías para distintas densidades de clientes por $km^{2}$}
     \end{table}
 
-    Observamos que cuanto más densa es la ciudad en clientes, más diferencia habrá entre el costo total de distribución para Nuevo Modelo y Modelo Adicional. Esto es así pues, como vimos antes, para ciudades densas se favorece mucho la utilización de repartidores. En Nuevo Modelo se aprovechan al máximo los repartidores, si el modelo lo requiere, ellos están disponibles. En cambio en Modelo Adicional, se necesitan más requisitos para que se contraten repartidores. De esta forma se pueden desaprovechar grandes oportunidades de ahorro. \\
+    Observamos que en general cuanto más densa es la ciudad en clientes, más diferencia habrá entre el costo total de distribución para Nuevo Modelo y Modelo Adicional. Esto es así pues, como vimos antes, para ciudades densas se favorece mucho la utilización de repartidores. En Nuevo Modelo se aprovechan al máximo los repartidores, si el modelo lo requiere, ellos están disponibles. En cambio en Modelo Adicional, se necesitan más requisitos para que se contraten repartidores. De esta forma se pueden desaprovechar grandes oportunidades de ahorro. \\
     Por el contrario, cuanto más dispersa es la ciudad en clientes, más distancia cliente-cliente, menos repartidores podrán ser usados en ambos modelos y por ende, no se generará tanta diferencia entre modelo y modelo. \\
-    También notamos que si la ciudad ya pasa a ser muy densa, baja la pérdida, y esto puede deberse a que al ser tan densa la resstricción de que salgan 4 repartidores por punto deja de ser un problema porque hay muchos puntos a los que se puede llegar en bicicleta desde cada cliente del camión, y podrían seguir usándose tantos repartidores como antes.
+    También notamos que si la ciudad ya pasa a ser muy densa, baja la pérdida, y esto puede deberse a que al ser tan densa la restricción de que salgan 4 repartidores por punto deja de ser un problema porque hay muchos puntos a los que se puede llegar en bicicleta desde cada cliente del camión, y podrían seguir usándose tantos repartidores como antes.
 
-    Al correr el modelo de restricciones adicionales combinadas no observamos resultados diferentes.
+    Al correr el modelo de restricciones adicionales combinadas obtuvimos los mismos resultados, salvo para la ciudad muy densa donde se obtuvo una pérdida del 20,0\%: el exigir que ciertos clientes tengan que recibir sí o sí su pedido por camión, hace que el recurso de los repartidores que tan bien le viene a las ciudades muy densas en clientes, no se pueda explotar. La pérdida es bastante significativa.
 
     \subsection{Análisis del tiempo de cómputo para distintos parámetros de CPLEX}
 
